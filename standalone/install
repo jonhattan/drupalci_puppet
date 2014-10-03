@@ -31,3 +31,5 @@ case "$distro" in
   ;;
 esac
 
+gem install r10k -y
+
