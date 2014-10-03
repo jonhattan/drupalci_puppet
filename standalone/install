@@ -17,14 +17,15 @@ fi
 # Install dependencies based on distro family.
 case "$distro" in
   debian)
-    RELEASE=wheezy # TODO# Leverage lsb-release
+    apt-get install lsb-release
+    RELEASE=$(lsb_release -c -s)
     wget https://apt.puppetlabs.com/puppetlabs-release-$RELEASE.deb
     dpkg -i puppetlabs-release-$RELEASE.deb
-    apt-get update
     apt-get install puppet
   ;;
   redhat)
-    RELEASE=el-6 # Change to el-5, el-7, fedora-19, fedora-20...
+    yum install redhat-lsb
+    RELEASE=el-$(lsb_release -r -s | head -c1)
     rpm -ivh http://yum.puppetlabs.com/puppetlabs-release-$RELEASE.noarch.rpm
     yum install puppet
   ;;
