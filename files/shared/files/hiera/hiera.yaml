@@ -1,0 +1,27 @@
+:backends:
+  - yaml
+
+:logger: console
+
+:hierarchy:
+# See: http://docs.puppetlabs.com/hiera/1/puppet.html#special-pseudo-variables
+  - 'nodes/%{::fqdn}_private'
+  - 'nodes/%{::fqdn}'
+  - 'nodes/%{::hostname}_private'
+  - 'nodes/%{::hostname}'
+
+  - 'OS/%{::operatingsystem}/%{::lsbdistcodename}_private'
+  - 'OS/%{::operatingsystem}/%{::lsbdistcodename}'
+  - 'OS/%{::operatingsystem}/major_%{::lsbmajdistrelease}_private'
+  - 'OS/%{::operatingsystem}/major_%{::lsbmajdistrelease}'
+  - 'OS/%{::operatingsystem}/common_private'
+  - 'OS/%{::operatingsystem}/common'
+  - 'OS/families/%{::osfamily}_private'
+  - 'OS/families/%{::osfamily}'
+
+  - 'common_private'
+  - 'common'
+
+:yaml:
+  :datadir: '/etc/puppet/environments/%{::environment}/hieradata'
+
