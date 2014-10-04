@@ -1,0 +1,7 @@
+---
+
+default   :
+  box     : 'puppetlabs/debian-7.5-64-puppet'
+  memory  : 4096
+  cpus    : 2
+

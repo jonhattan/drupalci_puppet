@@ -1,2 +1,3 @@
 .vagrant
 modules
+Vagrantfile-config.yaml
