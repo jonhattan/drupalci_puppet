@@ -1,0 +1,10 @@
+---
+classes :
+  - apache
+  - apache::mod::php
+  - drush
+  - mysql::client
+  - mysql::server
+  - php
+  - webapp
+
