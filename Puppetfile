@@ -9,6 +9,9 @@ mod 'puppetlabs/concat',
 mod 'jonhattan/drush',
   :ref => '0.2.0'
 
+mod 'puppetlabs/inifile',
+  :ref => '1.1.4'
+
 mod 'puppetlabs/mysql',
   :ref => '2.3.1'
 
