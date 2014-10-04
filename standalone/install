@@ -1,7 +1,17 @@
 #!/bin/bash
 
-# Change pwd to the script directory.
-cd "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+#set -x
+
+pushd $(pwd)
+
+# Vagrant copies provision scripts to /tmp/vagrant-shell and runs from there.
+# So we need to chdir back to the script's folder to start from.
+if [ -d "/vagrant" ]
+then
+  CONFDIR="/vagrant/standalone"
+else
+  CONFDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+fi
 
 # Identify distro family.
 if [ -f /etc/debian_version ]
@@ -36,14 +46,8 @@ esac
 
 gem install r10k -y
 
-# Vagrant copies provision scripts to /tmp/vagrant-shell and runs from there.
-# So we need to chdir back to the script's folder to start from.
-if [ -d "/vagrant" ]
-then
-  cd /vagrant
-else
-  cd "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-fi
-
 r10k puppetfile install ../Puppetfile -v
+
+popd
+exit 0
 
