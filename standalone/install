@@ -13,6 +13,8 @@ else
   CONFDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 fi
 
+cd $CONFDIR
+
 # Identify distro family.
 if [ -f /etc/debian_version ]
 then
