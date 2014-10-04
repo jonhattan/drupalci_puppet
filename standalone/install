@@ -22,16 +22,28 @@ case "$distro" in
     RELEASE=$(lsb_release -c -s)
     wget https://apt.puppetlabs.com/puppetlabs-release-$RELEASE.deb
     dpkg -i puppetlabs-release-$RELEASE.deb
-    apt-get install puppet
+    apt-get install puppet hiera facter -y
+    apt-get install git -y
   ;;
   redhat)
     yum install redhat-lsb
     RELEASE=el-$(lsb_release -r -s | head -c1)
     rpm -ivh http://yum.puppetlabs.com/puppetlabs-release-$RELEASE.noarch.rpm
     yum install puppet
+    yum install git
   ;;
 esac
 
 gem install r10k -y
+
+# Vagrant copies provision scripts to /tmp/vagrant-shell and runs from there.
+# So we need to chdir back to the script's folder to start from.
+if [ -d "/vagrant" ]
+then
+  cd /vagrant
+else
+  cd "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+fi
+
 r10k puppetfile install ../Puppetfile -v
 

@@ -1,13 +1,19 @@
 #!/bin/bash
 
-if [ "$(hostname -d)" != 'vagrant' ]; then
-  git pull
-fi
+#set -x
 
 pushd $(pwd)
 
+# Vagrant copies provision scripts to /tmp/vagrant-shell and runs from there.
+# So we need to chdir back to the script's folder to start from.
+if [ -d "/vagrant" ]
+then
+  CONFDIR="/vagrant/standalone"
+else
+  CONFDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+fi
+
 # This directory is our puppet confdir.
-CONFDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 PROD_FILES="${CONFDIR}/../files"
 HIERA_DIR="${CONFDIR}/../hieradata"
 cd $CONFDIR
