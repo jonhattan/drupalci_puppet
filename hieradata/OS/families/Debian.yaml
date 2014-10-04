@@ -1,0 +1,27 @@
+---
+
+php::extensions :
+  apc       :
+    settings       :
+      apc.enabled          : 1
+      apc.shm_segments     : 1
+      apc.optimization     : 0
+      apc.shm_size         : 128M
+      apc.ttl              : 7200
+      apc.user_ttl         : 7200
+      apc.num_files_hint   : 1024
+      apc.enable_cli       : 0
+      apc.cache_by_default : 1
+    provider       : apt
+    package_prefix : php-
+  gd        :
+    provider       : apt
+  mcrypt    :
+    provider       : apt
+  mysql     :
+    provider       : apt
+  uploadprogress :
+    provider       : pecl
+  xmlrpc    :
+    provider       : apt
+
