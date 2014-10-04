@@ -8,3 +8,48 @@ classes :
   - php
   - webapp
 
+apache::default_mods :
+  - actions
+  - alias
+  - dir
+  - env
+  - expires
+  - logio
+  - mime
+  - negotiation
+  - reqtimeout
+  - rewrite
+  - setenvif
+
+drush::versions            : [ master ]
+drush::default_version     : master
+drush::bash_autocompletion : false
+
+mysql::server::root_password : root
+
+php::fpm          : false
+php::manage_repos : false
+
+php::extensions :
+  apc       :
+    provider : pecl
+    config   :
+      apc.enabled          : 1
+      apc.shm_segments     : 1
+      apc.optimization     : 0
+      apc.shm_size         : 128M
+      apc.ttl              : 7200
+      apc.user_ttl         : 7200
+      apc.num_files_hint   : 1024
+      apc.enable_cli       : 0
+      apc.cache_by_default : 1
+  gd        : {}
+  mbstring  : {}
+  mcrypt    : {}
+  mysql     : {}
+  pdo       : {}
+  uploadprogress :
+    provider : pecl
+  xml       : {}
+  xmlrpc    : {}
+
