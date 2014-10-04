@@ -1,0 +1,50 @@
+#!/bin/bash
+
+if [ "$(hostname -d)" != 'vagrant' ]; then
+  git pull
+fi
+
+pushd $(pwd)
+
+# This directory is our puppet confdir.
+CONFDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+PROD_FILES="${CONFDIR}/../files"
+HIERA_DIR="${CONFDIR}/../hieradata"
+cd $CONFDIR
+
+# Create fake environment pointing to the real env in the parent dir.
+mkdir -p environments/production
+mount --bind .. environments/production
+
+# Generate suitable fileserver.conf.
+: ${COMMON_FILES_DIR:="/tmp"}
+cat > ${CONFDIR}/fileserver.conf << EOT
+[common_files]
+  path ${COMMON_FILES_DIR}
+  allow *
+
+[production_files]
+  path ${PROD_FILES}
+  allow *
+EOT
+
+# Generate suitable hiera.yaml
+: ${HIERA_YAML_SRC:="${PROD_FILES}/shared/hiera/hiera.yaml"}
+cat ${HIERA_YAML_SRC} \
+| sed "/:hierarchy:/a \ \ - 'standalone'" \
+| sed "/:datadir:/ s='.*'='${HIERA_DIR}'=" \
+> ${CONFDIR}/hiera.yaml
+
+# Apply.
+puppet apply --confdir $CONFDIR "${CONFDIR}/../manifests" "$@"
+
+# Scrap fake environment.
+umount environments/production
+rmdir environments/production
+
+# Fix permissions to permit puppet master/agent work.
+chown puppet:puppet -R /var/lib/puppet/reports
+
+popd
+exit 0
+
