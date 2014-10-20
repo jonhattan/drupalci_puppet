@@ -1,11 +1,14 @@
 ---
 classes :
   - apache
+  - apache::mod::php
   - drush
   - mysql::client
   - mysql::server
   - php
   - webapp
+
+apache::mpm_module: 'prefork'
 
 apache::default_mods :
   - actions
@@ -25,6 +28,7 @@ drush::bash_autocompletion : false
 
 mysql::server::root_password : root
 
+php::fpm          : false
 php::manage_repos : false
 
 webapp::instances:
