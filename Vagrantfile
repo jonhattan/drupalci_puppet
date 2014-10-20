@@ -29,7 +29,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   hostname = "drupalci"
   config.vm.define hostname, primary: true do |host|
     host_config = vconfig['default'].merge(vconfig.fetch(hostname, {}))
-   
+
     host.vm.box = host_config['box']
     host.vm.hostname = "drupalci"
 
@@ -38,6 +38,5 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       v.cpus = host_config['cpus']
     end
   end
-  
 end
 
