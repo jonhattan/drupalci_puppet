@@ -27,4 +27,6 @@ mysql::server::root_password : root
 
 php::manage_repos : false
 
+webapp::instances:
+  drupal: {}
 
