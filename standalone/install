@@ -13,8 +13,6 @@ else
   CONFDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 fi
 
-cd $CONFDIR
-
 # Identify distro family.
 if [ -f /etc/debian_version ]
 then
@@ -46,9 +44,10 @@ case "$distro" in
   ;;
 esac
 
-gem install r10k -y
+gem install r10k
 
-r10k puppetfile install ../Puppetfile -v
+cd "${CONFDIR}/.."
+r10k puppetfile install Puppetfile -v
 
 popd
 exit 0
