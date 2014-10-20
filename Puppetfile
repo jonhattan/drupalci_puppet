@@ -19,12 +19,12 @@ mod 'puppetlabs/inifile',
 mod 'puppetlabs/mysql',
   :ref => '2.3.1'
 
-# Back to upstream once this PR is accepted: https://github.com/Mayflower/puppet-php/pull/34
+# Back to upstream once 2.0.3 is available.
 #mod 'mayflower/php',
-  #:ref => '2.0.2'
+  #:ref => '2.0.3'
 mod 'php',
-  :git => 'https://github.com/jonhattan/puppet-php.git',
-  :ref => 'fix_php_extensions_duplicate_resource'
+  :git => 'https://github.com/Mayflower/puppet-php.git',
+  :ref => '5e7e643'
 
 mod 'puppetlabs/stdlib',
   :ref => '4.3.2'
